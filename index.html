@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HN Reader</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="nav">
+
+<div class="logo">Y</div>
+
+<b>Hacker News Reader</b>
+
+<button data-feed="newstories">New</button>
+<button data-feed="topstories">Top</button>
+<button data-feed="beststories">Best</button>
+<button data-feed="jobstories">Jobs</button>
+<button data-feed="pollstories">Polls</button>
+<button data-feed="askstories">Ask</button>
+<button data-feed="showstories">Show</button>
+
+</div>
+
+</header>
+
+
+
+<section id="liveBox" class="hidden">
+
+<span id="liveText"></span>
+
+<button id="showNew">
+Show new
+</button>
+
+</section>
+
+
+
+<main>
+
+
+<div id="status"></div>
+
+
+<section id="feed"></section>
+
+
+<div id="loader">
+Loading...
+</div>
+
+
+</main>
+
+
+
+<div id="toast"></div>
+
+
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/comments.js"></script>
+<script src="js/posts.js"></script>
+<script src="js/feed.js"></script>
+<script src="js/realtime.js"></script>
+<script src="js/events.js"></script>
+<script src="js/main.js"></script>
+
+
+</body>
+</html>
