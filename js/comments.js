@@ -4,10 +4,9 @@ async function loadComments(post,container){
 container.innerHTML="Loading comments...";
 
 
-
 if(!post.kids || !post.kids.length){
 
-container.innerHTML="No comments";
+container.innerHTML="No comments";//No comments to display
 
 return;
 
@@ -17,21 +16,17 @@ return;
 
 const comments =
 await Promise.all(
-post.kids.map(getItem)
+post.kids.map(getItem)//Télécharger tous les commentaires
 );
 
-
-
 container.innerHTML="";
-
-
 
 comments
 .filter(Boolean)
 .sort(
-(a,b)=>b.time-a.time
+(a,b)=>b.time-a.time//Trier par date de création
 )
-.forEach(comment=>{
+.forEach(comment=>{//Afficher chaque commentaire
 
 
 renderComment(
@@ -51,13 +46,14 @@ container,
 
 
 async function renderComment(
+    //affiche un commentaire puis pourra afficher ses réponses
 comment,
 container,
-level
+level //gestion de l'indentation des réponses
 ){
 
 
-if(!comment || comment.deleted)
+if(!comment || comment.deleted)//Si le commentaire est supprimé on ne l'affiche pas
 return;
 
 
@@ -80,7 +76,7 @@ box.innerHTML=`
 ${escapeHTML(comment.by || "deleted")}
 
 -
-${formatTime(comment.time)}
+${formatTime(comment.time)}//ransforme un timestamp en date lisible
 
 </div>
 
@@ -105,7 +101,7 @@ Replies (${comment.kids?.length || 0})
 
 
 
-container.append(box);
+container.append(box);//Ajoute le commentaire au dom
 
 
 
@@ -124,7 +120,7 @@ if(comment.kids && comment.kids.length){
 button.onclick=async()=>{
 
 
-children.classList.toggle("hidden");
+children.classList.toggle("hidden");//Afficher ou cacher les réponses
 
 
 
@@ -134,7 +130,7 @@ if(!children.dataset.loaded){
 
 const replies=
 await Promise.all(
-comment.kids.map(getItem)
+comment.kids.map(getItem)//Télécharger tous les commentaires
 );
 
 
@@ -142,14 +138,14 @@ comment.kids.map(getItem)
 replies
 .filter(Boolean)
 .sort(
-(a,b)=>b.time-a.time
+(a,b)=>b.time-a.time//Trier par date de création
 )
 .forEach(reply=>{
 
 
 renderComment(
 reply,
-children,
+children,//Afficher la réponse
 level+1
 );
 
@@ -158,7 +154,7 @@ level+1
 
 
 
-children.dataset.loaded=true;
+children.dataset.loaded=true;//Marquer les réponses comme chargées
 
 
 }
@@ -171,7 +167,7 @@ children.dataset.loaded=true;
 }
 else{
 
-button.style.display="none";
+button.style.display="none";//Si le commentaire n'a pas de réponses, on cache le bouton
 
 }
 

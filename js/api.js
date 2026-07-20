@@ -2,9 +2,9 @@ const API =
 "https://hacker-news.firebaseio.com/v0";
 
 
-const cache = new Map();
+const cache = new Map();//cache pour stocker les reponses deja recues
 
-const pendingRequests = new Map();
+const pendingRequests = new Map();//cache pour stocker les requetes en cours
 
 
 
@@ -17,14 +17,13 @@ try{
 
 
 const r =
-await fetch(url);
-
+await fetch(url); //envoi les requete attente la reponse
 
 if(!r.ok)
 throw Error();
 
 
-return await r.json();
+return await r.json(); //attente la reponse et la transforme en json
 
 
 }
@@ -49,7 +48,7 @@ setTimeout(r,1000*(i+1))
 
 
 
-async function getItem(id){
+async function getItem(id){//recupere un item par son id
 
 
 if(cache.has(id))
@@ -62,16 +61,16 @@ return pendingRequests.get(id);
 
 
 
-const request =
+const request =//Création de la requête
 fetchRetry(
 `${API}/item/${id}.json`
 )
-.then(data=>{
+.then(data=>{//une fois la reponse recu on la stocke dans le cache
 
 
 cache.set(id,data);
 
-pendingRequests.delete(id);
+pendingRequests.delete(id);//on supprime la requete en cours
 
 return data;
 
@@ -89,7 +88,7 @@ return null;
 
 
 
-pendingRequests.set(id,request);
+pendingRequests.set(id,request);//mémorise la Promise.
 
 
 return request;
@@ -101,9 +100,9 @@ return request;
 
 
 
-async function getFeed(type){
+async function getFeed(type){//recupere une liste d'item par type (top, new, best) 
 
-return fetchRetry(
+return fetchRetry(//récupérer une liste d'identifiants
 `${API}/${type}.json`
 );
 
